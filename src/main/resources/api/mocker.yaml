@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Mocker Service API
+  description: API describing how to interact with the mocker service programatically.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+    description: Local endpoint for the v1 of the application.
+  - url: https://localhost:8090/v1
+    description: Alternative local endpoint for the v1 of the application.
+components:
+  schemas:
+    Request:
+      properties:
+        endpoint:
+          type: string
+          description: Endpoint for which the mock is created. Can contain multiple levels using / as separator.
+        method:
+          type: string
+          description: Http method for which the mock is created. Possible values are GET, POST, PUT, DELETE etc.
+      required:
+        - endpoint
+        - method
+    Response:
+      properties:
+        status:
+          type: integer
+          description: Http status code for the response. Possible values are 200, 404, 500 etc.
+        body:
+          type: string
+          description: The actual content of the reponse. An example response could contain a body with a JSON, HTML etc.
+        headers:
+          type: object
+          description: Http headers that are required for the response. Any header name is allowed.
+          properties:
+            key:
+              type: string
+            value:
+              type: string
+      required:
+        - status
+        - body
+    Mapping:
+      properties:
+        name:
+          type: string
+          description: Used to identify this mapping. Can be used for search or as an easy way to identify it.
+        request:
+          $ref: '#/components/schemas/Request'
+        response:
+          $ref: '#/components/schemas/Response'
+      required:
+        - name
+        - request
+        - response
+tags:
+- name: "Mapping"
+paths:
+  /mappings:
+    get:
+      tags:
+        - "Mapping"
+      summary: List of all mappings.
+      description: Returns a list of all mappings in this mock server using pagination.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+        - name: page
+          description: Pagination parameter used to specify which page to return (default 0).
+          required: false
+          in: query
+          schema:
+            type: integer
+        - name: size
+          description: Pagination parameter used to specify the number of results per page (default 20).
+          required: false
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mapping'
