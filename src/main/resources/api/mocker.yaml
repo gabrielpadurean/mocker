@@ -1,15 +1,27 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   title: Mocker Service API
   description: API describing how to interact with the mocker service programatically.
   version: 1.0.0
 servers:
   - url: http://localhost:8080/v1
-    description: Local endpoint for the v1 of the application.
+    description: Local URL for the v1 of the application.
   - url: https://localhost:8090/v1
-    description: Alternative local endpoint for the v1 of the application.
+    description: Alternative local URL for the v1 of the application.
 components:
   schemas:
+    Mapping:
+      properties:
+        name:
+          type: string
+          description: Used to identify this mapping. Can be used for search or as an easy way to identify it.
+        request:
+          $ref: '#/components/schemas/Request'
+        response:
+          $ref: '#/components/schemas/Response'
+      required:
+        - request
+        - response
     Request:
       properties:
         endpoint:
@@ -40,22 +52,94 @@ components:
       required:
         - status
         - body
-    Mapping:
-      properties:
-        name:
-          type: string
-          description: Used to identify this mapping. Can be used for search or as an easy way to identify it.
-        request:
-          $ref: '#/components/schemas/Request'
-        response:
-          $ref: '#/components/schemas/Response'
-      required:
-        - name
-        - request
-        - response
 tags:
 - name: "Mapping"
 paths:
+  /mapping:
+    put:
+      tags:
+        - "Mapping"
+      summary: Create a new mapping.
+      description: Create a new mapping based on the given details, request is idempotent.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: Contains details about the mapping and what request to map to a response.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mapping'
+      responses:
+        201:
+          description: Created
+          content: {}
+        400:
+          description: Bab Request
+          content: {}
+    post:
+      tags:
+        - "Mapping"
+      summary: Update an existing mapping.
+      description: Will update an existing mapping identified by the endpoint in the request.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: Contains details about the mapping and what to update about it.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mapping'
+      responses:
+        200:
+          description: OK
+          content: {}
+        400:
+          description: Bab Request
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+  /mapping/{endpoint}:
+    get:
+        tags:
+          - "Mapping"
+        summary: Get the mapping for the given endpoint.
+        description: Returns the exact mapping containing the given endpoint.
+        parameters:
+          - name: X-Application
+            description: Identification value for the application making the request.
+            required: true
+            in: header
+            schema:
+              type: string
+          - name: endpoint
+            description: Actual unique endpoint value to look for.
+            required: true
+            in: path
+            schema:
+              type: string
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Mapping'
+          404:
+            description: Not Found
+            content: {}
   /mappings:
     get:
       tags:
@@ -82,7 +166,7 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/json:
