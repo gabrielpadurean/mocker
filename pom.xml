@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.mocker</groupId>
-	<artifactId>mocker-service</artifactId>
+	<artifactId>mocker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mocker-service</name>
-	<description>Mocker application that behaves as a backend service that provides the overall mocker functionality.</description>
+	<name>mocker</name>
+	<description>Web application that behaves as a mock server.</description>
 
 	<properties>
 		<java.version>1.8</java.version>

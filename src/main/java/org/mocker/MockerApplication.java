@@ -1,13 +1,12 @@
-package org.mocker.mockerservice;
+package org.mocker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MockerServiceApplication {
+public class MockerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MockerServiceApplication.class, args);
+		SpringApplication.run(MockerApplication.class, args);
 	}
-
 }
