@@ -12,4 +12,4 @@ Application consists of four main packages:
 ## Running from command line
 Follow these steps to start the application:
 + run `mvn clean install`
-+ run `mvn spring-boot:run` or `java -jar target/mocker-0.0.1-SNAPSHOT.jar` to start the application
++ run `mvn spring-boot:run` or `java -jar target/mocker-1.0.0-SNAPSHOT.jar` to start the application
