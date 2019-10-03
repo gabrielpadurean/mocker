@@ -14,12 +14,13 @@ components:
       properties:
         name:
           type: string
-          description: Used to identify this mapping. Can be used for search or as an easy way to identify it.
+          description: Used to uniquely identify this mapping. Can be used for search or as an easy way to identify it.
         request:
           $ref: '#/components/schemas/Request'
         response:
           $ref: '#/components/schemas/Response'
       required:
+        - name
         - request
         - response
     Request:
@@ -42,21 +43,23 @@ components:
           type: string
           description: The actual content of the reponse. An example response could contain a body with a JSON, HTML etc.
         headers:
-          type: object
+          type: array
           description: Http headers that are required for the response. Any header name is allowed.
-          properties:
-            key:
-              type: string
-            value:
-              type: string
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
       required:
         - status
         - body
 tags:
 - name: "Mapping"
 paths:
-  /mapping:
-    put:
+  /mappings:
+    post:
       tags:
         - "Mapping"
       summary: Create a new mapping.
@@ -82,65 +85,6 @@ paths:
         400:
           description: Bab Request
           content: {}
-    post:
-      tags:
-        - "Mapping"
-      summary: Update an existing mapping.
-      description: Will update an existing mapping identified by the endpoint in the request.
-      parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
-      requestBody:
-        description: Contains details about the mapping and what to update about it.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Mapping'
-      responses:
-        200:
-          description: OK
-          content: {}
-        400:
-          description: Bab Request
-          content: {}
-        404:
-          description: Not Found
-          content: {}
-  /mapping/{endpoint}:
-    get:
-        tags:
-          - "Mapping"
-        summary: Get the mapping for the given endpoint.
-        description: Returns the exact mapping containing the given endpoint.
-        parameters:
-          - name: X-Application
-            description: Identification value for the application making the request.
-            required: true
-            in: header
-            schema:
-              type: string
-          - name: endpoint
-            description: Actual unique endpoint value to look for.
-            required: true
-            in: path
-            schema:
-              type: string
-        responses:
-          200:
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Mapping'
-          404:
-            description: Not Found
-            content: {}
-  /mappings:
     get:
       tags:
         - "Mapping"
@@ -174,3 +118,67 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Mapping'
+  /mappings/{name}:
+    get:
+      tags:
+        - "Mapping"
+      summary: Get the mapping with the given name.
+      description: Returns the exact mapping containing the given name.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+        - name: name
+          description: Actual unique name to look for.
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mapping'
+        404:
+          description: Not Found
+          content: {}
+    put:
+      tags:
+        - "Mapping"
+      summary: Update the mapping with the given name.
+      description: Will update an existing mapping identified by the name.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+        - name: name
+          description: Actual unique name to look for.
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        description: Contains details about the mapping and what to update about it.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mapping'
+      responses:
+        200:
+          description: OK
+          content: {}
+        400:
+          description: Bab Request
+          content: {}
+        404:
+          description: Not Found
+          content: {}
