@@ -63,7 +63,7 @@ paths:
       tags:
         - "Mapping"
       summary: Create a new mapping.
-      description: Create a new mapping based on the given details, request is idempotent.
+      description: Create a new mapping based on the given details.
       parameters:
         - name: X-Application
           description: Identification value for the application making the request.
@@ -84,6 +84,9 @@ paths:
           content: {}
         400:
           description: Bab Request
+          content: {}
+        500:
+          description: Internal Server Error
           content: {}
     get:
       tags:
@@ -150,7 +153,7 @@ paths:
     put:
       tags:
         - "Mapping"
-      summary: Update the mapping with the given name.
+      summary: Update the mapping with the given name, request is idempotent.
       description: Will update an existing mapping identified by the name.
       parameters:
         - name: X-Application

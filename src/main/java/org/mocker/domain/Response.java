@@ -6,16 +6,16 @@ import java.util.Collection;
  * @author gabrielpadurean
  */
 public class Response {
-	private int status;
+	private Integer status;
 	private String body;
 	private Collection<Header> headers;
 
 	
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
