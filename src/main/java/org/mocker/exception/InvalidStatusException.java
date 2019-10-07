@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @SuppressWarnings("serial")
 @ResponseStatus(BAD_REQUEST)
-public class UnsupportedMethodException extends RuntimeException {
+public class InvalidStatusException extends RuntimeException {
 	
-	public UnsupportedMethodException(String message) {
+	public InvalidStatusException(String message) {
 		super(message);
 	}
 }
