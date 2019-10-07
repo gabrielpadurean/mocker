@@ -1,13 +1,11 @@
 package org.mocker.domain;
 
-import org.springframework.http.HttpMethod;
-
 /**
  * @author gabrielpadurean
  */
 public class Request {
 	private String endpoint;
-	private HttpMethod method;
+	private String method;
 
 	
 	public String getEndpoint() {
@@ -18,11 +16,11 @@ public class Request {
 		this.endpoint = endpoint;
 	}
 
-	public HttpMethod getMethod() {
+	public String getMethod() {
 		return method;
 	}
 
-	public void setMethod(HttpMethod method) {
+	public void setMethod(String method) {
 		this.method = method;
 	}
 }
