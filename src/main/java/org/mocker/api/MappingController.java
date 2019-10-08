@@ -32,6 +32,8 @@ public class MappingController {
 	public ResponseEntity<Mapping> createMapping(@RequestBody Mapping mapping) throws Exception {
 		mappingValidator.validate(mapping);
 		
+		mappingService.test();
+		
 		return created(new URI(""))
 				.body(mapping);
 	}

@@ -7,4 +7,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MappingService {
+	
+	public void test() {
+		throw new UnsupportedOperationException("Not implemented yet");
+	}
 }
