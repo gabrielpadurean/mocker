@@ -58,7 +58,7 @@ components:
 tags:
 - name: "Mapping"
 paths:
-  /mappings:
+  /api/mappings:
     post:
       tags:
         - "Mapping"
@@ -121,7 +121,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Mapping'
-  /mappings/{name}:
+  /api/mappings/{name}:
     get:
       tags:
         - "Mapping"
