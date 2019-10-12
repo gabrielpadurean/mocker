@@ -1,5 +1,8 @@
 package org.mocker.repository;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,7 +12,7 @@ import org.mocker.domain.Mapping;
 import org.springframework.stereotype.Repository;
 
 /**
- * This is just a dummy implementation of an actual repository, until the storage system is configured.
+ * This is just a dummy implementation of an actual repository until the storage system is configured.
  * 
  * @author gabrielpadurean
  */
@@ -31,16 +34,27 @@ public class MappingRepository {
 	}
 	
 	public Optional<Mapping> findById(String id) {
-		return id != null ? Optional.ofNullable(mappings.get(id)) : Optional.empty();
+		return id != null ? ofNullable(mappings.get(id)) : empty();
 	}
 	
 	public Optional<Mapping> findByEndpoint(String endpoint) {
-		return endpoint != null ? Optional.ofNullable(mappingsCache.get(endpoint)) : Optional.empty();
+		return endpoint != null ? ofNullable(mappingsCache.get(endpoint)) : empty();
 	}
 	
+	/**
+	 * Performs saveOrUpdate based on the given id.
+	 * If the id is missing it means this is a create action,
+	 * otherwise this is an update action performed.
+	 */
 	public synchronized Mapping save(Mapping mapping) {
 		if (mapping.getId() == null) {
 			mapping.setId(UUID.randomUUID().toString());
+		} else {
+			Mapping oldMapping = mappings.get(mapping.getId());
+			
+			if (!oldMapping.getRequest().getEndpoint().equalsIgnoreCase(mapping.getRequest().getEndpoint())) {
+				mappingsCache.remove(oldMapping.getRequest().getEndpoint());
+			}
 		}
 		
 		mappings.put(mapping.getId(), mapping);

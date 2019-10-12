@@ -12,9 +12,15 @@ components:
   schemas:
     Mapping:
       properties:
+        id:
+          type: string
+          description: Used to uniquely identify a certain mapping after it was created.
         name:
           type: string
-          description: Used to uniquely identify this mapping. Can be used for search or as an easy way to identify it.
+          description: Can be used for search or as an easy way to identify the mapping.
+        description:
+          type: string
+          description: Details explaining this mapping if necessary.
         request:
           $ref: '#/components/schemas/Request'
         response:
@@ -85,6 +91,9 @@ paths:
         400:
           description: Bab Request
           content: {}
+        409:
+          description: Conflict
+          content: {}
         500:
           description: Internal Server Error
           content: {}
@@ -121,12 +130,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Mapping'
-  /api/mappings/{name}:
+  /api/mappings/{id}:
     get:
       tags:
         - "Mapping"
-      summary: Get the mapping with the given name.
-      description: Returns the exact mapping containing the given name.
+      summary: Get the mapping with the given id.
+      description: Returns the exact mapping with the given id.
       parameters:
         - name: X-Application
           description: Identification value for the application making the request.
@@ -134,8 +143,8 @@ paths:
           in: header
           schema:
             type: string
-        - name: name
-          description: Actual unique name to look for.
+        - name: id
+          description: Actual unique id to look for.
           required: true
           in: path
           schema:
@@ -153,8 +162,8 @@ paths:
     put:
       tags:
         - "Mapping"
-      summary: Update the mapping with the given name, request is idempotent.
-      description: Will update an existing mapping identified by the name.
+      summary: Update the mapping with the given id, request is idempotent.
+      description: Will update an existing mapping identified by the id.
       parameters:
         - name: X-Application
           description: Identification value for the application making the request.
@@ -162,8 +171,8 @@ paths:
           in: header
           schema:
             type: string
-        - name: name
-          description: Actual unique name to look for.
+        - name: id
+          description: Actual unique id to look for.
           required: true
           in: path
           schema:

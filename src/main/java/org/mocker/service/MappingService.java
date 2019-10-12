@@ -30,15 +30,21 @@ public class MappingService {
 		return mappingRepository.findByEndpoint(endpoint);
 	}
 	
+	/**
+	 * Will save the {@link Mapping} instance, but will throw an exception
+	 * if a mapping for the same combination (endpoint, method etc) already exists.
+	 * If an id is provided for the mapping, will be ignored, since the ids
+	 * are handled internally and should not be provided by the client.
+	 * 
+	 * @param mapping The actual mapping object that will be saved.
+	 * @return The saved mapping instance.
+	 */
 	public Mapping save(Mapping mapping) {
-		mappingRepository
-			.findById(mapping.getId())
-			.ifPresent(existingMapping -> {
-				throw new AlreadyExistsException("Mapping with id " + existingMapping.getId() + " exists");
-			});
+		mapping.setId(null);
 		
 		mappingRepository
 			.findByEndpoint(mapping.getRequest().getEndpoint())
+			.filter(existingMapping -> existingMapping.getRequest().getMethod().equalsIgnoreCase(mapping.getRequest().getMethod()))
 			.ifPresent(existingMapping -> {
 				throw new AlreadyExistsException("Mapping with endpoint " + existingMapping.getRequest().getEndpoint() + " exists");
 			});
@@ -46,6 +52,15 @@ public class MappingService {
 		return mappingRepository.save(mapping);
 	}
 	
+	/**
+	 * Will update the {@link Mapping} instance based on the id.
+	 * If there is no existing mapping with the provided id an
+	 * exception will be throw signaling a not found mapping.
+	 * 
+	 * 
+	 * @param mapping The actual mapping object that will be updated.
+	 * @return The updated mapping instance.
+	 */
 	public Mapping update(Mapping mapping) {
 		return mappingRepository
 				.findById(mapping.getId())
