@@ -17,7 +17,7 @@ public class MappingMethodValidator implements Validator<Mapping> {
 	@Override
 	public void validate(Mapping mapping) {
 		if (HttpMethod.resolve(mapping.getRequest().getMethod()) == null) {
-			throw new InvalidMethodException("Method " + mapping.getRequest().getMethod() + " is not valid");
+			throw new InvalidMethodException("The method=" + mapping.getRequest().getMethod() + " is not valid");
 		}
 	}
 }

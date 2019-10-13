@@ -37,7 +37,7 @@ public class MappingController {
 		return mappingService
 				.findById(id)
 				.map(mapping -> ok(mapping))
-				.orElseThrow(() -> new NotFoundException("Mapping with id " + id + " not found"));
+				.orElseThrow(() -> new NotFoundException("Mapping with id=" + id + " not found"));
 	}
 	
 	@PostMapping("/mappings")

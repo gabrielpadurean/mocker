@@ -4,10 +4,10 @@ info:
   description: API describing how to interact with the mocker application.
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/v1
-    description: Local URL for the v1 of the application.
-  - url: https://localhost:8090/v1
-    description: Alternative local URL for the v1 of the application.
+  - url: http://localhost:8080
+    description: Local URL for the application.
+  - url: https://localhost:8090
+    description: Alternative local URL for the application.
 components:
   schemas:
     Mapping:
@@ -26,7 +26,6 @@ components:
         response:
           $ref: '#/components/schemas/Response'
       required:
-        - name
         - request
         - response
     Request:
@@ -64,12 +63,12 @@ components:
 tags:
 - name: "Mapping"
 paths:
-  /api/mappings:
+  /v1/api/mappings:
     post:
       tags:
         - "Mapping"
       summary: Create a new mapping.
-      description: Create a new mapping based on the given details.
+      description: Create a new mapping based on the given details (id is not required).
       parameters:
         - name: X-Application
           description: Identification value for the application making the request.
@@ -130,7 +129,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Mapping'
-  /api/mappings/{id}:
+  /v1/api/mappings/{id}:
     get:
       tags:
         - "Mapping"

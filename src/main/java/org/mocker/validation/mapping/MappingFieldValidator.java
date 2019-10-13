@@ -17,9 +17,7 @@ public class MappingFieldValidator implements Validator<Mapping> {
 
 	@Override
 	public void validate(Mapping mapping) {
-		try {
-			requireNonNull(mapping.getName(), "Name is required");
-			
+		try {			
 			requireNonNull(mapping.getRequest(), "Request is required");
 			requireNonNull(mapping.getRequest().getEndpoint(), "Request endpoint is required");
 			requireNonNull(mapping.getRequest().getMethod(), "Request method is required");

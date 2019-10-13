@@ -16,7 +16,7 @@ public class MappingStatusValidator implements Validator<Mapping> {
 	@Override
 	public void validate(Mapping mapping) {
 		if (mapping.getResponse().getStatus() < 100 || mapping.getResponse().getStatus() > 599) {
-			throw new InvalidStatusException("Status code " + mapping.getResponse().getStatus() + " is not valid");
+			throw new InvalidStatusException(" The statusCode=" + mapping.getResponse().getStatus() + " is not valid");
 		}
 	}
 }
