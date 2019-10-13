@@ -74,7 +74,6 @@ public class MappingService {
 	 * If there is no existing mapping with the provided id an
 	 * exception will be throw signaling a not found mapping.
 	 * 
-	 * 
 	 * @param mapping The actual mapping object that will be updated.
 	 * @return The updated mapping instance.
 	 * @throws An exception if the given mapping is not found.
