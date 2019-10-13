@@ -1,5 +1,5 @@
 # Name
-mocker
+mocker :heart: :rainbow:
 
 # Description
 Web application that behaves as a mock server.
