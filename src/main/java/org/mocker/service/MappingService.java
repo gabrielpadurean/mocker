@@ -24,19 +24,19 @@ public class MappingService {
 	
 	
 	public long count() {
-		LOG.info("Counting mappings");
+		LOG.info("Count mappings");
 		
 		return mappingRepository.count();
 	}
 	
 	public Optional<Mapping> findById(String id) {
-		LOG.info("Finding mapping with id={}", id);
+		LOG.info("Find mapping with id={}", id);
 
 		return mappingRepository.findById(id);
 	}
 	
 	public Optional<Mapping> findByEndpoint(String endpoint) {
-		LOG.info("Finding mapping with endpoint={}", endpoint);
+		LOG.info("Find mapping with endpoint={}", endpoint);
 		
 		return mappingRepository.findByEndpoint(endpoint);
 	}
@@ -52,18 +52,21 @@ public class MappingService {
 	 * @throws An exception if the mapping already exists.
 	 */
 	public Mapping save(Mapping mapping) {
-		LOG.info("Saving mapping with method={} and endpoint={}", mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
-		
 		mapping.setId(null);
 		
-		mappingRepository
-			.findByEndpoint(mapping.getRequest().getEndpoint())
-			.filter(existingMapping -> existingMapping.getRequest().getMethod().equalsIgnoreCase(mapping.getRequest().getMethod()))
-			.ifPresent(existingMapping -> {
-				throw new AlreadyExistsException("Mapping for method=" + existingMapping.getRequest().getMethod() + " and endpoint=" + existingMapping.getRequest().getEndpoint() + " exists");
-			});
-		
-		return mappingRepository.save(mapping);
+		return (Mapping)mappingRepository
+				.findByEndpoint(mapping.getRequest().getEndpoint())
+				.filter(existingMapping -> existingMapping.getRequest().getMethod().equalsIgnoreCase(mapping.getRequest().getMethod()))
+				.map(existingMapping -> {
+					LOG.error("Cannot save mapping (already exists) with method={} and endpoint={}", existingMapping.getRequest().getMethod(), existingMapping.getRequest().getEndpoint());
+
+					throw new AlreadyExistsException("Mapping for method=" + existingMapping.getRequest().getMethod() + " and endpoint=" + existingMapping.getRequest().getEndpoint() + " exists");
+				})
+				.orElseGet(() -> {
+					LOG.info("Save mapping with method={} and endpoint={}", mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
+
+					return mappingRepository.save(mapping);
+				});
 	}
 	
 	/**
@@ -77,11 +80,17 @@ public class MappingService {
 	 * @throws An exception if the given mapping is not found.
 	 */
 	public Mapping update(Mapping mapping) {
-		LOG.info("Updating mapping with id={}, method={} and endpoint={}", mapping.getId(), mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
-		
-		return mappingRepository
+		return (Mapping)mappingRepository
 				.findById(mapping.getId())
-				.map(existingMapping -> mappingRepository.save(mapping))
-				.orElseThrow(() -> new NotFoundException("Mapping with id=" + mapping.getId() + " not found"));
+				.map(existingMapping -> {
+					LOG.info("Update mapping with id={}, method={} and endpoint={}", mapping.getId(), mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
+					
+					return mappingRepository.save(mapping);
+				})
+				.orElseThrow(() -> {
+					LOG.error("Cannot update mapping (not found) with id={}", mapping.getId());
+
+					return new NotFoundException("Mapping with id=" + mapping.getId() + " not found");
+				});
 	}
 }
