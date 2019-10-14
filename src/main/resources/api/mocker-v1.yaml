@@ -158,6 +158,34 @@ paths:
         404:
           description: Not Found
           content: {}
+    delete:
+      tags:
+        - "Mapping"
+      summary: Delete the mapping with the given id.
+      description: Deletes the exact mapping with the given id.
+      parameters:
+        - name: X-Application
+          description: Identification value for the application making the request.
+          required: true
+          in: header
+          schema:
+            type: string
+        - name: id
+          description: Actual unique id to delete.
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mapping'
+        404:
+          description: Not Found
+          content: {}
     put:
       tags:
         - "Mapping"

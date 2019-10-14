@@ -41,6 +41,12 @@ public class MappingService {
 		return mappingRepository.findByEndpoint(endpoint);
 	}
 	
+	public Optional<Mapping> deleteById(String id) {
+		LOG.info("Delete mapping with id={}", id);
+		
+		return mappingRepository.deleteById(id);
+	}
+	
 	/**
 	 * Will save the {@link Mapping} instance, but will throw an exception
 	 * if a mapping for the same combination (endpoint, method etc) already exists.

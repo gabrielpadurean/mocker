@@ -40,6 +40,20 @@ public class MappingRepository {
 	public Optional<Mapping> findByEndpoint(String endpoint) {
 		return endpoint != null ? ofNullable(mappingsCache.get(endpoint)) : empty();
 	}
+
+	public Optional<Mapping> deleteById(String id) {
+		Mapping mapping = null;
+		
+		if (id != null) {
+			mapping = mappings.remove(id);
+			
+			if (mapping != null) {
+				mappingsCache.remove(mapping.getRequest().getEndpoint());
+			}
+		}
+		
+		return ofNullable(mapping);
+	}
 	
 	/**
 	 * Performs saveOrUpdate based on the given id.
