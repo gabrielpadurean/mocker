@@ -19,9 +19,8 @@ public class MockService {
 	
 	/**
 	 * Finds the mock for the given combination of parameters.
-	 * The body is not used at this moment.
 	 */
-	public Optional<Mapping> findMock(String endpoint, String method, String body) {
+	public Optional<Mapping> findMock(String endpoint, String method) {
 		return ofNullable(mappingService
 				.findByEndpoint(endpoint)
 				.filter(mapping -> mapping.getRequest().getMethod().equalsIgnoreCase(method))
