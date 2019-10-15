@@ -1,5 +1,6 @@
 package org.mocker.interceptor;
 
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class ClientInterceptor implements HandlerInterceptor {
 		} else {
 			LOG.warn("The X-Application={} header is not whitelisted", xApplication);
 			
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.setStatus(SC_UNAUTHORIZED);
 			
 			return false;
 		}

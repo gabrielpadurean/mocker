@@ -189,8 +189,8 @@ paths:
     put:
       tags:
         - "Mapping"
-      summary: Update the mapping with the given id, request is idempotent.
-      description: Will update an existing mapping identified by the id.
+      summary: Update the mapping with the given id.
+      description: Will update an existing mapping identified by the id, request is idempotent.
       parameters:
         - name: X-Application
           description: Identification value for the application making the request.
