@@ -25,3 +25,17 @@ For version 2 there should be the `mocker-v2.yaml` file.
 
 ## Exception handling
 TBA
+
+## Validation
+TBA
+
+## Storage
+TBA
+
+## Logs
+There are two main files for logging, the `server_log.log` and the `access_log.log`.  
+The `server_log.log` is used as the main file for logging, all details are logged here.  
+The `access_log.log` is used for logging all requests accessing the application.  
+
+## UI
+TBA
