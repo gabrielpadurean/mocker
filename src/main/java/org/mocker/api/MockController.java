@@ -1,11 +1,12 @@
 package org.mocker.api;
 
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mocker.domain.Criteria;
+import org.mocker.domain.Mapping;
 import org.mocker.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,11 @@ public class MockController {
 		String endpoint = uri.replace("/v1/api/mocks", "") + (isEmpty(queryString) ? "" : queryString);
 		String method = httpServletRequest.getMethod();
 		
-		return mockService
-				.findMock(endpoint, method)
-				.map(mapping -> status(mapping.getResponse().getStatus()).body(mapping.getResponse().getBody()))
-				.orElseGet(() -> notFound().build());
+		Criteria criteria = new Criteria(method, endpoint);
+		
+		Mapping mapping = mockService.findByCriteria(criteria);
+		
+		return status(mapping.getResponse().getStatus())
+				.body(mapping.getResponse().getBody());
 	}
 }

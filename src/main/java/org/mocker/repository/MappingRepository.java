@@ -41,18 +41,12 @@ public class MappingRepository {
 		return endpoint != null ? ofNullable(mappingsCache.get(endpoint)) : empty();
 	}
 
-	public Optional<Mapping> deleteById(String id) {
-		Mapping mapping = null;
-		
-		if (id != null) {
-			mapping = mappings.remove(id);
-			
-			if (mapping != null) {
-				mappingsCache.remove(mapping.getRequest().getEndpoint());
-			}
-		}
-		
-		return ofNullable(mapping);
+	public synchronized Mapping deleteById(String id) {
+		Mapping mapping = mappings.remove(id);
+
+		mappingsCache.remove(mapping.getRequest().getEndpoint());
+
+		return mapping;
 	}
 	
 	/**

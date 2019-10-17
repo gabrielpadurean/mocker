@@ -2,8 +2,6 @@ package org.mocker.service;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.util.Optional;
-
 import org.mocker.domain.Mapping;
 import org.mocker.exception.AlreadyExistsException;
 import org.mocker.exception.NotFoundException;
@@ -29,22 +27,76 @@ public class MappingService {
 		return mappingRepository.count();
 	}
 	
-	public Optional<Mapping> findById(String id) {
-		LOG.info("Find mapping with id={}", id);
+	/**
+	 * Will find the {@link Mapping} instance based on the id.
+	 * If there is no existing mapping with the provided id an
+	 * exception will be throw signaling a not found mapping.
+	 * 
+	 * @param id The id of the mapping to find.
+	 * @return The mapping instance.
+	 * @throws An exception if the given mapping is not found.
+	 */
+	public Mapping findById(String id) {
+		return (Mapping)mappingRepository
+				.findById(id)
+				.map(mapping -> {
+					LOG.info("Find mapping with id={}", id);
 
-		return mappingRepository.findById(id);
+					return mapping;
+				})
+				.orElseThrow(() -> {
+					LOG.error("Cannot find mapping (not found) with id={}", id);
+
+					return new NotFoundException("Mapping with id=" + id + " not found");
+				});
 	}
 	
-	public Optional<Mapping> findByEndpoint(String endpoint) {
-		LOG.info("Find mapping with endpoint={}", endpoint);
-		
-		return mappingRepository.findByEndpoint(endpoint);
+	/**
+	 * Will find the {@link Mapping} instance based on the endpoint.
+	 * If there is no existing mapping with the provided endpoint an
+	 * exception will be throw signaling a not found mapping.
+	 * 
+	 * @param endpoint The endpoint of the mapping to find.
+	 * @return The mapping instance.
+	 * @throws An exception if the given mapping is not found.
+	 */
+	public Mapping findByEndpoint(String endpoint) {
+		return (Mapping)mappingRepository
+				.findByEndpoint(endpoint)
+				.map(mapping -> {
+					LOG.info("Find mapping with endpoint={}", endpoint);
+					
+					return mapping;
+				})
+				.orElseThrow(() -> {
+					LOG.error("Cannot find mapping (not found) with endpoint={}", endpoint);
+
+					return new NotFoundException("Mapping with endpoint=" + endpoint + " not found");
+				});
 	}
 	
-	public Optional<Mapping> deleteById(String id) {
-		LOG.info("Delete mapping with id={}", id);
-		
-		return mappingRepository.deleteById(id);
+	/**
+	 * Will delete the {@link Mapping} instance based on the id.
+	 * If there is no existing mapping with the provided id an
+	 * exception will be throw signaling a not found mapping.
+	 * 
+	 * @param id The id of the mapping to delete.
+	 * @return The deleted mapping instance.
+	 * @throws An exception if the given mapping is not found.
+	 */
+	public Mapping deleteById(String id) {
+		return (Mapping)mappingRepository
+				.findById(id)
+				.map(mapping -> {
+					LOG.info("Delete mapping with id={}, method={} and endpoint={}", mapping.getId(), mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
+					
+					return mappingRepository.deleteById(id);
+				})
+				.orElseThrow(() -> {
+					LOG.error("Cannot delete mapping (not found) with id={}", id);
+
+					return new NotFoundException("Mapping with id=" + id + " not found");
+				});
 	}
 	
 	/**

@@ -1,14 +1,15 @@
 package org.mocker.api;
 
+import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.ok;
 
 import java.net.URI;
 
 import org.mocker.domain.Mapping;
-import org.mocker.exception.NotFoundException;
 import org.mocker.service.MappingService;
 import org.mocker.validation.mapping.MappingValidator;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api/")
 @RestController
 public class MappingController {
+    private static final Logger LOG = getLogger(MappingController.class);
+
 	@Autowired
 	private MappingValidator mappingValidator;
 	
@@ -35,18 +38,12 @@ public class MappingController {
 	
 	@GetMapping("/mappings/{id}")
 	public ResponseEntity<Mapping> getMapping(@PathVariable String id) throws Exception {
-		return mappingService
-				.findById(id)
-				.map(mapping -> ok(mapping))
-				.orElseThrow(() -> new NotFoundException("Mapping with id=" + id + " not found"));
+		return ok(mappingService.findById(id));
 	}
 	
 	@DeleteMapping("/mappings/{id}")
 	public ResponseEntity<Mapping> deleteMapping(@PathVariable String id) throws Exception {
-		return mappingService
-				.deleteById(id)
-				.map(mapping -> ok(mapping))
-				.orElseThrow(() -> new NotFoundException("Mapping with id=" + id + " not found"));
+		return ok(mappingService.deleteById(id));
 	}
 	
 	@PostMapping("/mappings")
