@@ -34,7 +34,7 @@ public class ClientInterceptor implements HandlerInterceptor {
 		if (clientService.isClientWhitelisted(xApplication)) {
 			return true;
 		} else {
-			LOG.warn("The X-Application={} header is not whitelisted", xApplication);
+			LOG.warn("Validation issue because the X-Application={} header is not whitelisted", xApplication);
 			
 			response.setStatus(SC_UNAUTHORIZED);
 			

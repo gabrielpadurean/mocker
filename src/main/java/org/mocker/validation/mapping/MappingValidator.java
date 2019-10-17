@@ -1,6 +1,6 @@
 package org.mocker.validation.mapping;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.mocker.domain.Mapping;
 import org.mocker.validation.Validator;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MappingValidator {
 	@Autowired
-	private Collection<Validator<Mapping>> mappingValidators;
+	private List<Validator<Mapping>> mappingValidators;
 	
 	
 	public void validate(Mapping mapping) throws RuntimeException {
