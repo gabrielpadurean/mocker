@@ -27,7 +27,7 @@ public class MockController {
 	public ResponseEntity<String> handleMocks(HttpServletRequest httpServletRequest) {
 		String uri = httpServletRequest.getRequestURI();
 		String queryString = httpServletRequest.getQueryString();
-		String endpoint = uri.replace("/v1/api/mocks", "") + (isEmpty(queryString) ? "" : queryString);
+		String endpoint = uri.replace("/v1/api/mocks", "") + (isEmpty(queryString) ? "" : "?" + queryString);
 		String method = httpServletRequest.getMethod();
 		
 		Criteria criteria = new Criteria(method, endpoint);
