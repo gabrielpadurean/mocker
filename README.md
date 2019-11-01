@@ -57,7 +57,8 @@ TBA
 TBA
 
 ## Storage
-TBA
+**MySQL** is used to store the **Mapping** entities.  
+To start the application a running MySQL instance is required.  
 
 ## Logs
 There are two main files for logging, the `server_log.log` and the `access_log.log`.  
