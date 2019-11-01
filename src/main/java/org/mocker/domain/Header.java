@@ -1,19 +1,22 @@
 package org.mocker.domain;
 
+import javax.persistence.Embeddable;
+
 /**
  * @author gabrielpadurean
  */
+@Embeddable
 public class Header {
-	private String key;
+	private String name;
 	private String value;
 
 	
-	public String getKey() {
-		return key;
+	public String getName() {
+		return name;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getValue() {

@@ -2,12 +2,18 @@ package org.mocker.domain;
 
 import java.util.Collection;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
+
 /**
  * @author gabrielpadurean
  */
 public class Response {
 	private Integer status;
+	
 	private String body;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
 	private Collection<Header> headers;
 
 	

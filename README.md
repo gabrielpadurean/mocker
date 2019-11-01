@@ -23,6 +23,33 @@ The **REST API** can have multiple versions and each new version of the API shou
 For version 1 there should be the `mocker-v1.yaml` file.  
 For version 2 there should be the `mocker-v2.yaml` file.  
 
+The JSON structure of a mapping:  
+```json
+{
+	"id": "",
+    "name": "test",
+    "description": "Test description",
+    "request": {
+        "endpoint": "/test",
+        "method": "GET"
+    },
+    "response": {
+        "status": "200",
+        "body": "Something",
+        "headers": [
+            {
+                "key": "HeaderOne",
+                "value": "HeaderOneValue"
+            },
+            {
+                "key": "HeaderTwo",
+                "value": "HeaderTwoValue"
+            }
+        ]
+    }
+}
+```
+
 ## Exception handling
 TBA
 

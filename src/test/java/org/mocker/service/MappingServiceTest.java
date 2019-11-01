@@ -4,6 +4,8 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,35 +50,35 @@ public class MappingServiceTest {
 	
 	@Test
 	public void testFindByIdExistingMapping() {
-		when(mappingRepository.findById("abc123")).thenReturn(of(createMapping()));
+		when(mappingRepository.findById(123L)).thenReturn(of(createMapping()));
 		
-		Mapping mapping = victim.findById("abc123");
+		Mapping mapping = victim.findById(123L);
 		
-		assertEquals("abc123", mapping.getId());
-		verify(mappingRepository).findById("abc123");
+		assertEquals(Long.valueOf(123), mapping.getId());
+		verify(mappingRepository).findById(123L);
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void testFindByIdNonExistingMapping() {
-		when(mappingRepository.findById("abc123")).thenReturn(empty());
+		when(mappingRepository.findById(123L)).thenReturn(empty());
 		
-		victim.findById("abc123");
+		victim.findById(123L);
 	}
 	
 	@Test
 	public void testFindByEndpointExistingMapping() {
-		when(mappingRepository.findByEndpoint("/test")).thenReturn(of(createMapping()));
+		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(createMapping()));
 
 		Mapping mapping = victim.findByEndpoint("/test");
 
-		assertEquals("abc123", mapping.getId());
+		assertEquals(Long.valueOf(123), mapping.getId());
 		assertEquals("/test", mapping.getRequest().getEndpoint());
-		verify(mappingRepository).findByEndpoint("/test");
+		verify(mappingRepository).findMappingByRequestEndpoint("/test");
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void testFindByEndpointNonExistingMapping() {
-		when(mappingRepository.findByEndpoint("/test")).thenReturn(empty());
+		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(empty());
 
 		victim.findByEndpoint("/test");
 	}
@@ -85,36 +87,36 @@ public class MappingServiceTest {
 	public void testDeleteByIdExistingMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findById("abc123")).thenReturn(of(mapping));
-		when(mappingRepository.deleteById("abc123")).thenReturn(mapping);
+		when(mappingRepository.findById(123L)).thenReturn(of(mapping));
+		doNothing().when(mappingRepository).deleteById(123L);
 		
-		Mapping deletedMapping = victim.deleteById("abc123");
+		Mapping deletedMapping = victim.deleteById(123L);
 		
-		assertEquals("abc123", deletedMapping.getId());
+		assertEquals(Long.valueOf(123), deletedMapping.getId());
 		assertEquals("/test", deletedMapping.getRequest().getEndpoint());
-		verify(mappingRepository).findById("abc123");
-		verify(mappingRepository).deleteById("abc123");
+		verify(mappingRepository).findById(123L);
+		verify(mappingRepository).delete(any());
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void testDeleteByIdNonExistingMapping() {
-		when(mappingRepository.findById("abc123")).thenReturn(empty());
+		when(mappingRepository.findById(123L)).thenReturn(empty());
 		
-		victim.deleteById("abc123");
+		victim.deleteById(123L);
 	}
 	
 	@Test
 	public void testSaveNewMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findByEndpoint("/test")).thenReturn(empty());
+		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(empty());
 		when(mappingRepository.save(mapping)).thenReturn(mapping);
 		
 		Mapping createdMapping = victim.save(mapping);
 		
 		assertEquals("test", createdMapping.getName());
 		assertEquals("test", createdMapping.getDescription());
-		verify(mappingRepository).findByEndpoint("/test");
+		verify(mappingRepository).findMappingByRequestEndpoint("/test");
 		verify(mappingRepository).save(mapping);
 	}
 	
@@ -122,7 +124,7 @@ public class MappingServiceTest {
 	public void testSaveExistingMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findByEndpoint("/test")).thenReturn(of(mapping));
+		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(mapping));
 		
 		try {
 			victim.save(mapping);			
@@ -130,7 +132,7 @@ public class MappingServiceTest {
 			assertTrue(true);
 		}
 		
-		verify(mappingRepository).findByEndpoint("/test");
+		verify(mappingRepository).findMappingByRequestEndpoint("/test");
 		verify(mappingRepository, never()).save(mapping);
 	}
 	
@@ -142,14 +144,14 @@ public class MappingServiceTest {
 		similarMapping.setDescription("similarDescription");
 		similarMapping.getRequest().setMethod("POST");
 		
-		when(mappingRepository.findByEndpoint("/test")).thenReturn(of(similarMapping));
+		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(similarMapping));
 		when(mappingRepository.save(mapping)).thenReturn(mapping);
 
 		Mapping createdMapping = victim.save(mapping);
 		
 		assertEquals("test", createdMapping.getName());
 		assertEquals("test", createdMapping.getDescription());
-		verify(mappingRepository).findByEndpoint("/test");
+		verify(mappingRepository).findMappingByRequestEndpoint("/test");
 		verify(mappingRepository).save(mapping);
 	}
 	
@@ -157,13 +159,13 @@ public class MappingServiceTest {
 	public void testUpdateMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findById("abc123")).thenReturn(of(mapping));
+		when(mappingRepository.findById(123L)).thenReturn(of(mapping));
 		when(mappingRepository.save(mapping)).thenReturn(mapping);
 		
 		Mapping updatedMapping = victim.update(mapping);
 		
-		assertEquals("abc123", updatedMapping.getId());
-		verify(mappingRepository).findById("abc123");
+		assertEquals(Long.valueOf(123), updatedMapping.getId());
+		verify(mappingRepository).findById(123L);
 		verify(mappingRepository).save(mapping);
 	}
 	
@@ -171,7 +173,7 @@ public class MappingServiceTest {
 	public void testUpdateNonExistingMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findById("abc123")).thenReturn(empty());
+		when(mappingRepository.findById(123L)).thenReturn(empty());
 		
 		try {
 			victim.update(mapping);
@@ -179,7 +181,7 @@ public class MappingServiceTest {
 			assertTrue(true);
 		}
 		
-		verify(mappingRepository).findById("abc123");
+		verify(mappingRepository).findById(123L);
 		verify(mappingRepository, never()).save(mapping);
 	}
 	
@@ -188,7 +190,7 @@ public class MappingServiceTest {
 		Request request = new Request();
 		Response response = new Response();
 		
-		mapping.setId("abc123");
+		mapping.setId(123L);
 		mapping.setName("test");
 		mapping.setDescription("test");
 		

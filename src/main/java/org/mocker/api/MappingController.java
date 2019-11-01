@@ -33,12 +33,12 @@ public class MappingController {
 	
 	
 	@GetMapping("/mappings/{id}")
-	public ResponseEntity<Mapping> getMapping(@PathVariable String id) {
+	public ResponseEntity<Mapping> getMapping(@PathVariable Long id) {
 		return ok(mappingService.findById(id));
 	}
 	
 	@DeleteMapping("/mappings/{id}")
-	public ResponseEntity<Mapping> deleteMapping(@PathVariable String id) {
+	public ResponseEntity<Mapping> deleteMapping(@PathVariable Long id) {
 		return ok(mappingService.deleteById(id));
 	}
 	

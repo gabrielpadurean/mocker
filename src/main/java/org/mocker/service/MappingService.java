@@ -36,7 +36,7 @@ public class MappingService {
 	 * @return The mapping instance.
 	 * @throws An exception if the given mapping is not found.
 	 */
-	public Mapping findById(String id) {
+	public Mapping findById(Long id) {
 		return (Mapping)mappingRepository
 				.findById(id)
 				.map(mapping -> {
@@ -62,7 +62,7 @@ public class MappingService {
 	 */
 	public Mapping findByEndpoint(String endpoint) {
 		return (Mapping)mappingRepository
-				.findByEndpoint(endpoint)
+				.findMappingByRequestEndpoint(endpoint)
 				.map(mapping -> {
 					LOG.info("Find mapping with endpoint={}", endpoint);
 					
@@ -84,13 +84,15 @@ public class MappingService {
 	 * @return The deleted mapping instance.
 	 * @throws An exception if the given mapping is not found.
 	 */
-	public Mapping deleteById(String id) {
+	public Mapping deleteById(Long id) {
 		return (Mapping)mappingRepository
 				.findById(id)
 				.map(mapping -> {
 					LOG.info("Delete mapping with id={}, method={} and endpoint={}", mapping.getId(), mapping.getRequest().getMethod(), mapping.getRequest().getEndpoint());
 					
-					return mappingRepository.deleteById(id);
+					mappingRepository.delete(mapping);
+					
+					return mapping;
 				})
 				.orElseThrow(() -> {
 					LOG.error("Cannot delete mapping (not found) with id={}", id);
@@ -110,10 +112,8 @@ public class MappingService {
 	 * @throws An exception if the mapping already exists.
 	 */
 	public Mapping save(Mapping mapping) {
-		mapping.setId(null);
-		
 		return (Mapping)mappingRepository
-				.findByEndpoint(mapping.getRequest().getEndpoint())
+				.findMappingByRequestEndpoint(mapping.getRequest().getEndpoint())
 				.filter(existingMapping -> existingMapping.getRequest().getMethod().equalsIgnoreCase(mapping.getRequest().getMethod()))
 				.map(existingMapping -> {
 					LOG.error("Cannot save mapping (already exists) with method={} and endpoint={}", existingMapping.getRequest().getMethod(), existingMapping.getRequest().getEndpoint());

@@ -1,21 +1,38 @@
 package org.mocker.domain;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author gabrielpadurean
  */
+@Entity
+@Table(name = "mapping")
 public class Mapping {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	private String name;
+	
 	private String description;
+	
+	@Embedded
 	private Request request;
+	
+	@Embedded	
 	private Response response;
 
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

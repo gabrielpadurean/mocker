@@ -72,7 +72,7 @@ public class MockControllerTest {
 		Request request = new Request();
 		Response response = new Response();
 		
-		mapping.setId("abc123");
+		mapping.setId(123L);
 		mapping.setName("test");
 		mapping.setDescription("test");
 		
