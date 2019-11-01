@@ -25,5 +25,11 @@ public class MappingEndpointValidator implements Validator<Mapping> {
 			
 			throw new InvalidEndpointException("The endpoint=" + mapping.getRequest().getEndpoint() + " should start with /");
 		}
+		
+		if (mapping.getRequest().getEndpoint().length() <= 1) {
+			LOG.warn("Validation issue because the endpoint={} should contain at least one character", mapping.getRequest().getEndpoint());
+			
+			throw new InvalidEndpointException("The endpoint=" + mapping.getRequest().getEndpoint() + " should contain at least one character");
+		}
 	}
 }
