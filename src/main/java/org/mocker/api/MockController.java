@@ -9,6 +9,7 @@ import org.mocker.domain.Criteria;
 import org.mocker.domain.Mapping;
 import org.mocker.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,17 @@ public class MockController {
 		Mapping mapping = mockService.findByCriteria(criteria);
 		
 		return status(mapping.getResponse().getStatus())
+				.headers(buildResponseHeaders(mapping))
 				.body(mapping.getResponse().getBody());
+	}
+	
+	private HttpHeaders buildResponseHeaders(Mapping mapping) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		mapping.getResponse().getHeaders().forEach(header -> {
+			httpHeaders.add(header.getName(), header.getValue());
+		});
+
+		return httpHeaders;
 	}
 }
