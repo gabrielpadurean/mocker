@@ -54,7 +54,12 @@ The JSON structure of a mapping:
 TBA
 
 ## Validation
-TBA
+Each **API** request is validated using a series of validators that can be found in the `validation` package.  
+The validators are applied in a certain order and it is important to keep know this in case of changes or refactoring.  
+
+## Postman
+The collection from **Postman** contains example requests that can be used to make calls to the **API**.  
+The collection requests also contain basic integration tests that can be used to make a basic validation of the **API**.  
 
 ## Storage
 **MySQL** is used to store the **Mapping** entities.  

@@ -96,7 +96,7 @@ public class MappingControllerTest {
 		doNothing().when(mappingValidator).validate(mapping);
 		when(mappingService.update(mapping)).thenReturn(mapping);
 		
-		ResponseEntity<Mapping> responseEntity = victim.updateMapping(mapping);
+		ResponseEntity<Mapping> responseEntity = victim.updateMapping(123L, mapping);
 		
 		assertEquals(200, responseEntity.getStatusCodeValue());
 		assertEquals(Long.valueOf(123), responseEntity.getBody().getId());
@@ -110,7 +110,7 @@ public class MappingControllerTest {
 		
 		doThrow(InvalidEndpointException.class).when(mappingValidator).validate(mapping);
 		
-		victim.updateMapping(mapping);
+		victim.updateMapping(123L, mapping);
 	}
 	
 	private Mapping createMapping() {

@@ -3,9 +3,12 @@ package org.mocker.api;
 import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.util.StringUtils.isEmpty;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.mocker.domain.Criteria;
+import org.mocker.domain.Header;
 import org.mocker.domain.Mapping;
 import org.mocker.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +39,18 @@ public class MockController {
 		Mapping mapping = mockService.findByCriteria(criteria);
 		
 		return status(mapping.getResponse().getStatus())
-				.headers(buildResponseHeaders(mapping))
+				.headers(buildResponseHeaders(mapping.getResponse().getHeaders()))
 				.body(mapping.getResponse().getBody());
 	}
 	
-	private HttpHeaders buildResponseHeaders(Mapping mapping) {
+	private HttpHeaders buildResponseHeaders(Collection<Header> headers) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 
-		mapping.getResponse().getHeaders().forEach(header -> {
-			httpHeaders.add(header.getName(), header.getValue());
-		});
+		if (headers != null) {
+			headers.forEach(header -> {
+				httpHeaders.add(header.getName(), header.getValue());
+			});
+		}
 
 		return httpHeaders;
 	}

@@ -2,12 +2,15 @@ package org.mocker.service;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.util.List;
+
 import org.mocker.domain.Mapping;
 import org.mocker.exception.AlreadyExistsException;
 import org.mocker.exception.NotFoundException;
 import org.mocker.repository.MappingRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -73,6 +76,18 @@ public class MappingService {
 
 					return new NotFoundException("Mapping with endpoint=" + endpoint + " not found");
 				});
+	}
+	
+	/**
+	 * Will return all mappings based on the given pagination and sorting details.
+	 * 
+	 * @param pageable Encapsulates details about pagination and sorting.
+	 * @return The list of mappings for the requested page.
+	 */
+	public List<Mapping> findAll(Pageable pageable) {
+		LOG.info("Find mappings with page={} and size={}", pageable.getOffset(), pageable.getPageSize());
+
+		return mappingRepository.findAll(pageable).getContent();
 	}
 	
 	/**
