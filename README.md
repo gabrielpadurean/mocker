@@ -2,7 +2,9 @@
 mocker :heart: :rainbow:
 
 # Description
-Web application that behaves as a mock server.
+Web application that behaves as a mock server.  
+The application is built using the 3 layer architecture, with the major layers being presentation - business - dao.  
+While having an UI the clients can also interaction programmatically with the application using the exposed **REST API**.  
 
 ## Package structure
 Application consists of four main packages:
@@ -26,7 +28,7 @@ For version 2 there should be the `mocker-v2.yaml` file.
 The JSON structure of a mapping:  
 ```json
 {
-	"id": "",
+    "id": "",
     "name": "test",
     "description": "Test description",
     "request": {
@@ -51,7 +53,9 @@ The JSON structure of a mapping:
 ```
 
 ## Exception handling
-TBA
+All exceptions that are thrown from the application have a **HTTP** status code corespondent.  
+For application exceptions that are not specifically handled by the code a **500 Internal Server Error** response is returned.   
+Check the `exception` package for examples of possible exception thrown upon request validation or during other actions in the application.  
 
 ## Validation
 Each **API** request is validated using a series of validators that can be found in the `validation` package.  
@@ -64,6 +68,7 @@ The collection requests also contain basic integration tests that can be used to
 ## Storage
 **MySQL** is used to store the **Mapping** entities.  
 To start the application a running MySQL instance is required.  
+Check the `application.properties` file for details related to the MySQL connection.  
 
 ## Logs
 There are two main files for logging, the `server_log.log` and the `access_log.log`.  
@@ -71,4 +76,5 @@ The `server_log.log` is used as the main file for logging, all details are logge
 The `access_log.log` is used for logging all requests accessing the application.  
 
 ## UI
-TBA
+The application web layer (consisting of html/css/js) interacts with the REST API using ajax calls from Javascript.  
+The html pages are loaded as static resources and the actual data and actions are performed from the Javascript files.  
