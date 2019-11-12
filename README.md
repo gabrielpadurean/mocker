@@ -3,14 +3,15 @@ mocker :heart: :rainbow:
 
 # Description
 Web application that behaves as a mock server.  
-The application is built using the 3 layer architecture, with the major layers being presentation - business - dao.  
+The application is built using the 3 layer architecture, with the major layers being `presentation - business - dao`.  
 While having an UI the clients can also interaction programmatically with the application using the exposed **REST API**.  
 
 ## Package structure
 Application consists of four main packages:
 + `api` used for the API exposed by the application
-+ `web` used for the web layer of the application
 + `service` used for the service layer of the application
++ `repository` used for the dao layer of the application
++ `domain` used for the domain model classes
 
 ## Running from command line
 Follow these steps to start the application:
@@ -28,7 +29,7 @@ For version 2 there should be the `mocker-v2.yaml` file.
 The JSON structure of a mapping:  
 ```json
 {
-    "id": "",
+    "id": 123,
     "name": "test",
     "description": "Test description",
     "request": {
@@ -67,8 +68,8 @@ The collection requests also contain basic integration tests that can be used to
 
 ## Storage
 **MySQL** is used to store the **Mapping** entities.  
-To start the application a running MySQL instance is required.  
-Check the `application.properties` file for details related to the MySQL connection.  
+To start the application a running **MySQL** instance is required.  
+Check the `application.properties` file for details related to the connection details.  
 
 ## Logs
 There are two main files for logging, the `server_log.log` and the `access_log.log`.  
@@ -76,5 +77,5 @@ The `server_log.log` is used as the main file for logging, all details are logge
 The `access_log.log` is used for logging all requests accessing the application.  
 
 ## UI
-The application web layer (consisting of html/css/js) interacts with the REST API using ajax calls from Javascript.  
-The html pages are loaded as static resources and the actual data and actions are performed from the Javascript files.  
+The application web layer (consisting of html/css/js) interacts with the **REST API** using ajax calls from javascript.  
+The html pages are loaded as static resources and the actual data and actions are performed from the javascript files.  
