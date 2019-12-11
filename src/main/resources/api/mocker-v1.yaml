@@ -69,13 +69,6 @@ paths:
         - "Mapping"
       summary: Create a new mapping.
       description: Create a new mapping based on the given details (id is not required).
-      parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
       requestBody:
         description: Contains details about the mapping and what request to map to a response.
         required: true
@@ -102,12 +95,6 @@ paths:
       summary: List of all mappings.
       description: Returns a list of all mappings in this mock server using pagination.
       parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
         - name: page
           description: Pagination parameter used to specify which page to return (default 0).
           required: false
@@ -136,12 +123,6 @@ paths:
       summary: Get the mapping with the given id.
       description: Returns the exact mapping with the given id.
       parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
         - name: id
           description: Actual unique id to look for.
           required: true
@@ -164,12 +145,6 @@ paths:
       summary: Delete the mapping with the given id.
       description: Deletes the exact mapping with the given id.
       parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
         - name: id
           description: Actual unique id to delete.
           required: true
@@ -192,12 +167,6 @@ paths:
       summary: Update the mapping with the given id.
       description: Will update an existing mapping identified by the id, request is idempotent.
       parameters:
-        - name: X-Application
-          description: Identification value for the application making the request.
-          required: true
-          in: header
-          schema:
-            type: string
         - name: id
           description: Actual unique id to look for.
           required: true
