@@ -11,6 +11,7 @@
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/mocker.js"></script>
 
 	<title>Mocker</title>
 </head>
@@ -24,6 +25,9 @@
 							<a href="/" class="brand-logo">Mocker</a>
 							<ul id="nav-mobile" class="right hide-on-med-and-down">
 								<li><a href="/">Home</a></li>
+								<li><a href="/view">View</a></li>
+								<li><a href="/update">Update</a></li>
+								<li><a href="/delete">Delete</a></li>
 								<li><a href="/about">About</a></li>
 								<li><a href="/contact">Contact</a></li>
 							</ul>
@@ -36,27 +40,77 @@
 
 	<main>
 		<div class="container">
-			<div class="row">
-				<form class="col s12">
-					<div class="row">
-						<div class="input-field col s12">
+			<form class="card-panel">
+				<div class="row">
+					<div class="col s12 m6">
+						<h5>Mapping</h5>
+						<p class="text-explain">
+							The mapping between a request and a response has a name<br/>and description to easily identify it for future editing or removal.
+						</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
 							<input id="name" type="text" class="validate">
 							<label for="name">Name</label>
 						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<input id="description" type="text" class="validate">
+						<div class="input-field">
+							<textarea id="description" class="materialize-textarea"></textarea>
 							<label for="description">Description</label>
 						</div>
 					</div>
-					<div class="row">
-						<div class="input-field col s12">
+				</div>
+				<div class="row">
+					<div class="col s12 m6">
+						<h5>Request</h5>
+						<p class="text-explain">The request is defined by the endpoint and the method.</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
 							<input id="endpoint" type="text" class="validate">
 							<label for="endpoint">Endpoint</label>
 						</div>
+						<div class="input-field">
+							<select>
+								<option value="" disabled selected></option>
+								<option value="get">GET</option>
+								<option value="post">POST</option>
+								<option value="put">PUT</option>
+								<option value="delete">DELETE</option>
+							</select>
+							<label>Method</label>
+						</div>
 					</div>
-				</form>
+				</div>
+				<div class="row last">
+					<div class="col s12 m6">
+						<h5>Response</h5>
+						<p class="text-explain">What to return when request is matched.</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
+							<input id="status" type="text" class="validate">
+							<label for="status">Status</label>
+						</div>
+						<div class="input-field">
+							<textarea id="body" class="materialize-textarea"></textarea>
+							<label for="body">Body</label>
+						</div>
+						<button class="btn waves-effect waves-light" type="submit" name="action">
+							Create
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="card-panel">
+				<div class="row last">
+					<div class="col s12">
+						<h5>How to</h5>
+						<p class="text-explain">
+							The application allows to create a mapping aka mock endpoint using the above form. This can be later viewed, updated or deleted. Links for these
+							actions can be found in the top menu.
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
@@ -68,7 +122,7 @@
 					<h5 class="white-text">Mocker</h5>
 					<p class="grey-text text-lighten-4">
 						The Mocker web application behaves like a mock server that allows the user to create<br/>
-						mock endpoints and define possible responses for the configured requests.
+						mappings aka mock endpoints and define possible responses for the configured requests.
 					</p>
 				</div>
 				<div class="col l2 s12 right">
