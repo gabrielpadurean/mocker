@@ -45,13 +45,13 @@
 					<div class="col s12 m6">
 						<h5>Mapping</h5>
 						<p class="text-explain">
-							The mapping between a request and a response has a name<br/>and description to easily identify it for future editing or removal.
+							The mapping between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> has a name<br/>and description to easily identify it for future updating or deletion.
 						</p>
 					</div>
 					<div class="col s12 m6">
 						<div class="input-field">
-							<input id="name" type="text" class="validate">
-							<label for="name">Name</label>
+							<input id="name" type="text" class="validate tooltipped" data-position="bottom" data-tooltip="Enter a unique name">
+							<label for="name">Name *</label>
 						</div>
 						<div class="input-field">
 							<textarea id="description" class="materialize-textarea"></textarea>
@@ -62,12 +62,12 @@
 				<div class="row">
 					<div class="col s12 m6">
 						<h5>Request</h5>
-						<p class="text-explain">The request is defined by the endpoint and the method.</p>
+						<p class="text-explain">The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is uniquely identified by the <a href="https://en.wikipedia.org/wiki/URL" target="_blank" title="Read more details">endpoint or URL</a> and the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="_blank" title="Read more details">HTTP method</a>.</p>
 					</div>
 					<div class="col s12 m6">
 						<div class="input-field">
-							<input id="endpoint" type="text" class="validate">
-							<label for="endpoint">Endpoint</label>
+							<input id="endpoint" type="text" class="validate tooltipped" data-position="bottom" data-tooltip="Enter value that starts after https://localhost:8080/...">
+							<label for="endpoint">Endpoint *</label>
 						</div>
 						<div class="input-field">
 							<select>
@@ -77,27 +77,29 @@
 								<option value="put">PUT</option>
 								<option value="delete">DELETE</option>
 							</select>
-							<label>Method</label>
+							<label>Method *</label>
 						</div>
 					</div>
 				</div>
 				<div class="row last">
 					<div class="col s12 m6">
 						<h5>Response</h5>
-						<p class="text-explain">What to return when request is matched.</p>
+						<p class="text-explain">
+							The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> (containing <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" title="Read more details">HTTP status</a>, the <a href="https://en.wikipedia.org/wiki/HTTP_message_body" target="_blank" title="Read more details">HTTP response body</a> etc) to return
+							<br/>
+							when the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is matched.
+						</p>
 					</div>
 					<div class="col s12 m6">
 						<div class="input-field">
-							<input id="status" type="text" class="validate">
-							<label for="status">Status</label>
+							<input id="status" type="text" class="validate tooltipped" data-position="bottom" data-tooltip="Enter the HTTP status. Example: 200, 404 etc.">
+							<label for="status">Status *</label>
 						</div>
 						<div class="input-field">
-							<textarea id="body" class="materialize-textarea"></textarea>
-							<label for="body">Body</label>
+							<textarea id="body" class="materialize-textarea tooltipped" data-position="bottom" data-tooltip="Enter the HTTP response body. Can be JSON, XML etc."></textarea>
+							<label for="body">Body *</label>
 						</div>
-						<button class="btn waves-effect waves-light" type="submit" name="action">
-							Create
-						</button>
+						<button id="createMapping" class="btn waves-effect waves-light" type="submit">Create</button>
 					</div>
 				</div>
 			</form>
@@ -106,8 +108,20 @@
 					<div class="col s12">
 						<h5>How to</h5>
 						<p class="text-explain">
-							The application allows to create a mapping aka mock endpoint using the above form. This can be later viewed, updated or deleted. Links for these
-							actions can be found in the top menu.
+							The application allows to create a mapping (between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a>) using the above form. This can be later viewed, updated or deleted. See links in the top menu.
+							<br/>
+							When an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is made to the application and matches the details from the <i>Request</i> section then an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> is sent back containing the details from the <i>Response</i> section.
+							<br/>
+							<br/>
+							The necessary steps:
+							<br/>
+							 - create a mapping (filling the form above) for an endpoint or URL that you need
+							<br/>
+							 - make an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> to the endpoint or URL specified (should match the details entered in the <i>Request</i> section)
+							<br/>
+							 - the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> will contain the details entered in the <i>Response</i> section
+							<br/>
+							 - the mapping can be updated or deleted (optional)
 						</p>
 					</div>
 				</div>
@@ -122,14 +136,14 @@
 					<h5 class="white-text">Mocker</h5>
 					<p class="grey-text text-lighten-4">
 						The Mocker web application behaves like a mock server that allows the user to create<br/>
-						mappings aka mock endpoints and define possible responses for the configured requests.
+						mappings that define possible HTTP responses for the configured HTTP requests.
 					</p>
 				</div>
 				<div class="col l2 s12 right">
 					<h5 class="white-text">Pages</h5>
 					<ul>
 						<li><a class="grey-text text-lighten-3" href="/">Home</a></li>
-						<li><a class="grey-text text-lighten-3" href="about">About</a></li>
+						<li><a class="grey-text text-lighten-3" href="/about">About</a></li>
 						<li><a class="grey-text text-lighten-3" href="/contact">Contact</a></li>
 					</ul>
 				</div>
