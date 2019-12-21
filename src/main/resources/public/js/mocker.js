@@ -1,28 +1,49 @@
 $(document).ready(function() {
 	$('select').formSelect();
+	
+    $('.modal').modal();
 
 	$("#createMappingForm").submit(function(event) {
 		event.preventDefault();
 
 		var url = $(this).attr("action");
 		var method = $(this).attr("method");
-		var name = $("#name").val();
-		var description = $("#description").val();
-
+		var nameValue = $("#name").val();
+		var descriptionValue = $("#description").val();
+		var endpointValue = $("#endpoint").val();
+		var methodValue = $("#method").val();
+		var statusValue = $("#status").val();
+		var bodyValue = $("#body").val();
+		
+		var mapping = {
+			name : nameValue,
+			description : descriptionValue,
+			request: {
+				endpoint: endpointValue,
+				method: methodValue
+			},
+			response: {
+				status: statusValue,
+				body: bodyValue
+			}
+		}
+		
 		$.ajax({
 			url: url,
 			type: method,
 			dataType: 'json',
-			data: {
-				name: name,
-				description: description
-			},
+		    contentType: 'application/json;charset=UTF-8',
+			data: JSON.stringify(mapping)
 		})
 		.done(function(data) {
-			alert("Done: " + data);
+			$('#modalTitle').html("Info");
+			$('#modalContent').html("The mapping was created successfully!");
+			$('.modal').modal('open');
 		})
 		.fail(function(data) {
-			alert("Fail: " + data);
+			$('#modalTitle').html("Error");
+			$('#modalContent').html("The mapping cannot be created: " + data.responseJSON.message);
+			$('.modal').modal('open');
 		});
 	});
 });

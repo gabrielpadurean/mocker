@@ -52,7 +52,7 @@
 						<div class="input-field">
 							<input id="name" type="text" class="validate" placeholder="Enter an unique name" required="required">
 							<label for="name">Name *</label>
-							<span class="helper-text" data-error="Name is required"></span>
+							<span class="helper-text" data-error="Name is required."></span>
 						</div>
 						<div class="input-field">
 							<input id="description" type="text">
@@ -69,7 +69,7 @@
 						<div class="input-field">
 							<input id="endpoint" type="text" class="validate" placeholder="Value starts after https://localhost:8080/..." required="required">
 							<label for="endpoint">Endpoint *</label>
-							<span class="helper-text" data-error="Endpoint is required"></span>
+							<span class="helper-text" data-error="Endpoint is required."></span>
 						</div>
 						<div class="input-field">
 							<select id="method" class="validate" required="required">
@@ -95,14 +95,14 @@
 						<div class="input-field">
 							<input id="status" type="number" class="validate" placeholder="Example HTTP status: 200, 404 etc." required="required">
 							<label for="status">Status *</label>
-							<span class="helper-text" data-error="Status is required"></span>
+							<span class="helper-text" data-error="Status is required."></span>
 						</div>
 						<div class="input-field">
 							<textarea id="body" class="materialize-textarea validate" placeholder="Enter the HTTP response body. Can be JSON, XML etc." required="required"></textarea>
 							<label for="body">Body *</label>
-							<span class="helper-text" data-error="Body is required"></span>
+							<span class="helper-text" data-error="Body is required."></span>
 						</div>
-						<button id="createMapping" class="btn waves-effect waves-light" type="submit">Create</button>
+						<button class="btn waves-effect waves-light" type="submit">Create</button>
 					</div>
 				</div>
 			</form>
@@ -128,6 +128,16 @@
 						</p>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div class="modal">
+			<div class="modal-content">
+				<h5 id="modalTitle"></h5>
+				<p id="modalContent"></p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn">Close</a>
 			</div>
 		</div>
 	</main>

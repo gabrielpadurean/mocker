@@ -21,7 +21,7 @@ public class MappingMethodValidator implements Validator<Mapping> {
 
 	@Override
 	public void validate(Mapping mapping) {
-		if (HttpMethod.resolve(mapping.getRequest().getMethod()) == null) {
+		if (HttpMethod.resolve(mapping.getRequest().getMethod().toUpperCase()) == null) {
 			LOG.warn("Validation issue because the method={} is not valid", mapping.getRequest().getMethod());
 
 			throw new InvalidMethodException("The method=" + mapping.getRequest().getMethod() + " is not valid");
