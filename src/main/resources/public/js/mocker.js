@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$('select').formSelect();
-	
+
     $('.modal').modal();
 
 	$("#createMappingForm").submit(function(event) {
@@ -14,6 +14,8 @@ $(document).ready(function() {
 		var methodValue = $("#method").val();
 		var statusValue = $("#status").val();
 		var bodyValue = $("#body").val();
+		
+		endpointValue = formatEndpoint(endpointValue);
 		
 		var mapping = {
 			name : nameValue,
@@ -36,14 +38,22 @@ $(document).ready(function() {
 			data: JSON.stringify(mapping)
 		})
 		.done(function(data) {
-			$('#modalTitle').html("Info");
-			$('#modalContent').html("The mapping was created successfully!");
+			$('#modalTitle').html("Success");
+			$('#modalContent').html("The mapping was created successfully. Use method <b>" + methodValue.toUpperCase() + "</b> and <b>https://localhost:8080/v1/api/mocks" + endpointValue + "</b> endpoint.");
 			$('.modal').modal('open');
 		})
 		.fail(function(data) {
 			$('#modalTitle').html("Error");
-			$('#modalContent').html("The mapping cannot be created: " + data.responseJSON.message);
+			$('#modalContent').html("The mapping cannot be created due to the following error: " + data.responseJSON.message);
 			$('.modal').modal('open');
 		});
 	});
 });
+
+function formatEndpoint(endpoint) {
+	if (!endpoint.startsWith("/")) {
+		return "/" + endpoint;
+	} else {
+		return endpoint;
+	}
+}

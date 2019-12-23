@@ -1,10 +1,15 @@
 package org.mocker.domain;
 
+import javax.persistence.Column;
+
 /**
  * @author gabrielpadurean
  */
 public class Request {
+	@Column(length = 5000)
 	private String endpoint;
+
+	@Column
 	private String method;
 
 	

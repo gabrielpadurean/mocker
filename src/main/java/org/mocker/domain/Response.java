@@ -2,6 +2,7 @@ package org.mocker.domain;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
 
@@ -9,8 +10,10 @@ import javax.persistence.FetchType;
  * @author gabrielpadurean
  */
 public class Response {
+	@Column
 	private Integer status;
 	
+	@Column(length = 50000)
 	private String body;
 	
 	@ElementCollection(fetch = FetchType.EAGER)

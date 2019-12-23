@@ -4,6 +4,9 @@
 
 .input-field .materialize-textarea {
 	min-height: 100px;
+	max-height: 400px;
+	resize: vertical;
+	overflow: auto;
 }
 form.card-panel {
 	margin: 1rem 0 1rem 0;

@@ -1,5 +1,6 @@
 package org.mocker.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,10 @@ public class Mapping {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column
 	private String name;
 	
+	@Column(length = 5000)
 	private String description;
 	
 	@Embedded

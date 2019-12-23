@@ -45,17 +45,17 @@
 					<div class="col s12 m6">
 						<h5>Mapping</h5>
 						<p class="text-explain">
-							The mapping between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> has a name<br/>and description to easily identify it for future updating or deletion.
+							The mapping between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> has a name<br/>and a description to easily identify it for future updating or deletion.
 						</p>
 					</div>
 					<div class="col s12 m6">
 						<div class="input-field">
-							<input id="name" type="text" class="validate" placeholder="Enter an unique name" required="required">
+							<input id="name" type="text" class="validate" placeholder="Enter unique name" required="required">
 							<label for="name">Name *</label>
 							<span class="helper-text" data-error="Name is required."></span>
 						</div>
 						<div class="input-field">
-							<input id="description" type="text">
+							<input id="description" type="text" placeholder="Enter description">
 							<label for="description">Description</label>
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 					</div>
 					<div class="col s12 m6">
 						<div class="input-field">
-							<input id="endpoint" type="text" class="validate" placeholder="Value starts after https://localhost:8080/v1/api/mocks/..." required="required">
+							<input id="endpoint" type="text" class="validate" placeholder="Enter value after https://localhost:8080/v1/api/mocks/..." required="required">
 							<label for="endpoint">Endpoint *</label>
 							<span class="helper-text" data-error="Endpoint is required."></span>
 						</div>
@@ -98,7 +98,7 @@
 							<span class="helper-text" data-error="Status is required."></span>
 						</div>
 						<div class="input-field">
-							<textarea id="body" class="materialize-textarea validate" placeholder="Enter the HTTP response body. Can be JSON, XML etc." required="required"></textarea>
+							<textarea id="body" class="materialize-textarea validate" placeholder="Enter the HTTP response body. Can be json, xml, html, text etc." required="required"></textarea>
 							<label for="body">Body *</label>
 							<span class="helper-text" data-error="Body is required."></span>
 						</div>
