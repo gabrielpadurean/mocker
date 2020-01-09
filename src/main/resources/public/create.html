@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link type="text/css" rel="stylesheet" href="css/mocker.css"/>
+    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/mocker.js"></script>
+
+	<title>Mocker - Create mapping</title>
+</head>
+<body class="mkrBgr">
+	<header>
+		<nav class="orange lighten">
+			<div class="container">
+				<div class="row">
+					<div class="col l12 s12">
+						<div class="nav-wrapper">
+							<a href="/" class="brand-logo">Mocker</a>
+							<ul id="nav-mobile" class="right hide-on-med-and-down">
+								<li><a href="/">Home</a></li>
+								<li><a href="/create">Create</a></li>
+								<li><a href="/view">View</a></li>
+								<li><a href="/update">Update</a></li>
+								<li><a href="/delete">Delete</a></li>
+								<li><a href="/about">About</a></li>
+								<li><a href="/contact">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<div class="container">
+			<form id="createMappingForm" action="/v1/api/mappings" method="post" class="card-panel">
+				<div class="row">
+					<div class="col s12 m6">
+						<h5>Mapping</h5>
+						<p class="text-explain">
+							The mapping between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> has a name<br/>and a description to easily identify it for future updating or deletion.
+						</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
+							<input id="name" type="text" class="validate" placeholder="Enter unique name" required="required">
+							<label for="name">Name *</label>
+							<span class="helper-text" data-error="Name is required."></span>
+						</div>
+						<div class="input-field">
+							<input id="description" type="text" placeholder="Enter description">
+							<label for="description">Description</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12 m6">
+						<h5>Request</h5>
+						<p class="text-explain">The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is uniquely identified by the <a href="https://en.wikipedia.org/wiki/URL" target="_blank" title="Read more details">endpoint or URL</a> and the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="_blank" title="Read more details">HTTP method</a>.</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
+							<input id="endpoint" type="text" class="validate" placeholder="Enter value after https://localhost:8080/v1/api/mocks/..." required="required">
+							<label for="endpoint">Endpoint *</label>
+							<span class="helper-text" data-error="Endpoint is required."></span>
+						</div>
+						<div class="input-field">
+							<select id="method" class="validate" required="required">
+								<option value="get">GET</option>
+								<option value="post">POST</option>
+								<option value="put">PUT</option>
+								<option value="delete">DELETE</option>
+							</select>
+							<label for="method">Method *</label>
+						</div>
+					</div>
+				</div>
+				<div class="row last">
+					<div class="col s12 m6">
+						<h5>Response</h5>
+						<p class="text-explain">
+							The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> (containing <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" title="Read more details">HTTP status</a>, the <a href="https://en.wikipedia.org/wiki/HTTP_message_body" target="_blank" title="Read more details">HTTP response body</a> etc) to return
+							<br/>
+							when the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is matched.
+						</p>
+					</div>
+					<div class="col s12 m6">
+						<div class="input-field">
+							<input id="status" type="number" class="validate" placeholder="Example HTTP status: 200, 404 etc." required="required">
+							<label for="status">Status *</label>
+							<span class="helper-text" data-error="Status is required."></span>
+						</div>
+						<div class="input-field">
+							<textarea id="body" class="materialize-textarea validate" placeholder="Enter the HTTP response body. Can be json, xml, html, text etc." required="required"></textarea>
+							<label for="body">Body *</label>
+							<span class="helper-text" data-error="Body is required."></span>
+						</div>
+						<button class="btn waves-effect waves-light" type="submit">Create</button>
+					</div>
+				</div>
+			</form>
+			<div class="card-panel">
+				<div class="row last">
+					<div class="col s12">
+						<h5>How to</h5>
+						<p class="text-explain">
+							The application allows to create a mapping (between an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> and an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a>) using the above form. This can be later viewed, updated or deleted. See links in the top menu.
+							<br/>
+							When an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> is made to the application and matches the details from the <i>Request</i> section then an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> is sent back containing the details from the <i>Response</i> section.
+							<br/>
+							<br/>
+							The necessary steps:
+							<br/>
+							 - create a mapping (filling the form above) for an endpoint or URL that you need
+							<br/>
+							 - make an <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" target="_blank" title="Read more details">HTTP request</a> to the endpoint or URL specified (should match the details entered in the <i>Request</i> section)
+							<br/>
+							 - the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html" target="_blank" title="Read more details">HTTP response</a> will contain the details entered in the <i>Response</i> section
+							<br/>
+							 - the mapping can be updated or deleted (optional)
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal">
+			<div class="modal-content">
+				<h5 id="modalTitle"></h5>
+				<p id="modalContent"></p>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="modal-close waves-effect waves-green btn">Close</a>
+			</div>
+		</div>
+	</main>
+
+	<footer class="page-footer teal">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12 left">
+					<h5 class="white-text">Mocker</h5>
+					<p class="grey-text text-lighten-4">
+						The Mocker web application behaves like a mock server that allows the user to create<br/>
+						mappings that define possible HTTP responses for the configured HTTP requests.
+					</p>
+				</div>
+				<div class="col l2 s12 right">
+					<h5 class="white-text">Pages</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="/">Home</a></li>
+						<li><a class="grey-text text-lighten-3" href="/about">About</a></li>
+						<li><a class="grey-text text-lighten-3" href="/contact">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">Copyright &copy; 2019 Mocker. All rights reserved.</div>
+		</div>
+	</footer>
+</body>
+</html>

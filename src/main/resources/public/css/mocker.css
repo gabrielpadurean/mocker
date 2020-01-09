@@ -1,3 +1,13 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
 .mkrBgr {
 	background: url(/images/background.png);
 }
@@ -8,7 +18,7 @@
 	resize: vertical;
 	overflow: auto;
 }
-form.card-panel {
+form.card-panel, .about.card-panel, .contact.card-panel, .view.card-panel {
 	margin: 1rem 0 1rem 0;
 }
 p.text-explain {
@@ -17,4 +27,13 @@ p.text-explain {
 }
 .row.last {
 	margin-bottom: 0px;
+}
+
+.pagination {
+	text-align: center;
+	margin: 24px 0px 0px 0px;
+}
+
+.actionIcon {
+	color: teal;
 }
