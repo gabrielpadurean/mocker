@@ -92,9 +92,21 @@ paths:
     get:
       tags:
         - "Mapping"
-      summary: List of all mappings.
-      description: Returns a list of all mappings in this mock server using pagination.
+      summary: List of the mappings or filtered list based on parameters.
+      description: Returns a list of all mappings or a subset based on possible parameters using pagination.
       parameters:
+        - name: name
+          description: Used to filter the mappings by name.
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: endpoint
+          description: Used to filter the mappings by endpoint.
+          required: false
+          in: query
+          schema:
+            type: string
         - name: page
           description: Pagination parameter used to specify which page to return (default 0).
           required: false

@@ -67,18 +67,18 @@ public class MappingServiceTest {
 	
 	@Test
 	public void testFindByEndpointExistingMapping() {
-		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(createMapping()));
+		when(mappingRepository.findByRequestEndpoint("/test")).thenReturn(of(createMapping()));
 
 		Mapping mapping = victim.findByEndpoint("/test");
 
 		assertEquals(Long.valueOf(123), mapping.getId());
 		assertEquals("/test", mapping.getRequest().getEndpoint());
-		verify(mappingRepository).findMappingByRequestEndpoint("/test");
+		verify(mappingRepository).findByRequestEndpoint("/test");
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void testFindByEndpointNonExistingMapping() {
-		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(empty());
+		when(mappingRepository.findByRequestEndpoint("/test")).thenReturn(empty());
 
 		victim.findByEndpoint("/test");
 	}
@@ -109,14 +109,14 @@ public class MappingServiceTest {
 	public void testSaveNewMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(empty());
+		when(mappingRepository.findByRequestEndpoint("/test")).thenReturn(empty());
 		when(mappingRepository.save(mapping)).thenReturn(mapping);
 		
 		Mapping createdMapping = victim.save(mapping);
 		
 		assertEquals("test", createdMapping.getName());
 		assertEquals("test", createdMapping.getDescription());
-		verify(mappingRepository).findMappingByRequestEndpoint("/test");
+		verify(mappingRepository).findByRequestEndpoint("/test");
 		verify(mappingRepository).save(mapping);
 	}
 	
@@ -124,7 +124,7 @@ public class MappingServiceTest {
 	public void testSaveExistingMapping() {
 		Mapping mapping = createMapping();
 		
-		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(mapping));
+		when(mappingRepository.findByRequestEndpoint("/test")).thenReturn(of(mapping));
 		
 		try {
 			victim.save(mapping);			
@@ -132,7 +132,7 @@ public class MappingServiceTest {
 			assertTrue(true);
 		}
 		
-		verify(mappingRepository).findMappingByRequestEndpoint("/test");
+		verify(mappingRepository).findByRequestEndpoint("/test");
 		verify(mappingRepository, never()).save(mapping);
 	}
 	
@@ -144,14 +144,14 @@ public class MappingServiceTest {
 		similarMapping.setDescription("similarDescription");
 		similarMapping.getRequest().setMethod("POST");
 		
-		when(mappingRepository.findMappingByRequestEndpoint("/test")).thenReturn(of(similarMapping));
+		when(mappingRepository.findByRequestEndpoint("/test")).thenReturn(of(similarMapping));
 		when(mappingRepository.save(mapping)).thenReturn(mapping);
 
 		Mapping createdMapping = victim.save(mapping);
 		
 		assertEquals("test", createdMapping.getName());
 		assertEquals("test", createdMapping.getDescription());
-		verify(mappingRepository).findMappingByRequestEndpoint("/test");
+		verify(mappingRepository).findByRequestEndpoint("/test");
 		verify(mappingRepository).save(mapping);
 	}
 	

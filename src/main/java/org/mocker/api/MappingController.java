@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,9 +40,21 @@ public class MappingController {
 		return ok(mappingService.findById(id));
 	}
 	
-	@GetMapping("/mappings")
-	public ResponseEntity<List<Mapping>> getMappings(Pageable pageable) {
-		return ok(mappingService.findAll(pageable));
+	@GetMapping(value = "/mappings")
+	public ResponseEntity<List<Mapping>> getMappings(@RequestParam(required = false) String name, @RequestParam(required = false) String endpoint, Pageable pageable) {
+		List<Mapping> mappings = null;
+		
+		if (name == null && endpoint == null) {
+			mappings = mappingService.findAll(pageable);
+		} else if (name != null && endpoint != null) {
+			mappings = mappingService.findByNameAndEndpointContaining(name, endpoint, pageable);
+		} else if (name != null) {
+			mappings = mappingService.findByNameContaining(name, pageable);
+		} else {
+			mappings = mappingService.findByEndpointContaining(endpoint, pageable);
+		}
+		
+		return ok(mappings);
 	}
 	
 	@DeleteMapping("/mappings/{id}")

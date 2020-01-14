@@ -65,7 +65,7 @@ public class MappingService {
 	 */
 	public Mapping findByEndpoint(String endpoint) {
 		return (Mapping)mappingRepository
-				.findMappingByRequestEndpoint(endpoint)
+				.findByRequestEndpoint(endpoint)
 				.map(mapping -> {
 					LOG.info("Find mapping with endpoint={}", endpoint);
 					
@@ -76,6 +76,49 @@ public class MappingService {
 
 					return new NotFoundException("Mapping with endpoint=" + endpoint + " not found");
 				});
+	}
+	
+	/**
+	 * Will find the list of {@link Mapping} instances that contain the name parameter.
+	 * If there is no existing mapping that contains the given parameter an empty list is returned.
+	 * 
+	 * @param name The name to filter by.
+	 * @param pageable Encapsulates details about pagination and sorting.
+	 * @return The list of mappings that contain the given name.
+	 */
+	public List<Mapping> findByNameContaining(String name, Pageable pageable) {
+		LOG.info("Find mappings by name={} with page={} and size={}", name, pageable.getOffset(), pageable.getPageSize());
+
+		return mappingRepository.findByNameContaining(name, pageable);
+	}
+	
+	/**
+	 * Will find the list of {@link Mapping} instances that contain the endpoint parameter.
+	 * If there is no existing mapping that contains the given parameter an empty list is returned.
+	 * 
+	 * @param endpoint The endpoint to filter by.
+	 * @param pageable Encapsulates details about pagination and sorting.
+	 * @return The list of mappings that contain the given endpoint.
+	 */
+	public List<Mapping> findByEndpointContaining(String endpoint, Pageable pageable) {
+		LOG.info("Find mappings by endpoint={} with page={} and size={}", endpoint, pageable.getOffset(), pageable.getPageSize());
+
+		return mappingRepository.findByRequestEndpointContaining(endpoint, pageable);
+	}
+	
+	/**
+	 * Will find the list of {@link Mapping} instances that contain the name and endpoint parameters.
+	 * If there is no existing mapping that contains the given parameters an empty list is returned.
+	 * 
+	 * @param name The name to filter by.
+	 * @param endpoint The endpoint to filter by.
+	 * @param pageable Encapsulates details about pagination and sorting.
+	 * @return The list of mappings that contain the given name and endpoint.
+	 */
+	public List<Mapping> findByNameAndEndpointContaining(String name, String endpoint, Pageable pageable) {
+		LOG.info("Find mappings by name={} and endpoint={} with page={} and size={}", name, endpoint, pageable.getOffset(), pageable.getPageSize());
+
+		return mappingRepository.findByNameContainingAndRequestEndpointContaining(name, endpoint, pageable);
 	}
 	
 	/**
@@ -128,7 +171,7 @@ public class MappingService {
 	 */
 	public Mapping save(Mapping mapping) {
 		return (Mapping)mappingRepository
-				.findMappingByRequestEndpoint(mapping.getRequest().getEndpoint())
+				.findByRequestEndpoint(mapping.getRequest().getEndpoint())
 				.filter(existingMapping -> existingMapping.getRequest().getMethod().equalsIgnoreCase(mapping.getRequest().getMethod()))
 				.map(existingMapping -> {
 					LOG.error("Cannot save mapping (already exists) with method={} and endpoint={}", existingMapping.getRequest().getMethod(), existingMapping.getRequest().getEndpoint());
