@@ -11,7 +11,7 @@
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="/js/mocker.js"></script>
+    <script type="text/javascript" src="/js/mockerView.js"></script>
 
 	<title>Mocker - View mappings</title>
 </head>
@@ -23,7 +23,17 @@
 					<div class="col l12 s12">
 						<div class="nav-wrapper">
 							<a href="/" class="brand-logo">Mocker</a>
-							<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+							<ul class="right hide-on-med-and-down">
+								<li><a href="/">Home</a></li>
+								<li><a href="/create">Create</a></li>
+								<li><a href="/view">View</a></li>
+								<li><a href="/update">Update</a></li>
+								<li><a href="/delete">Delete</a></li>
+								<li><a href="/about">About</a></li>
+								<li><a href="/contact">Contact</a></li>
+							</ul>
+							<ul id="nav-mobile" class="sidenav">
 								<li><a href="/">Home</a></li>
 								<li><a href="/create">Create</a></li>
 								<li><a href="/view">View</a></li>
@@ -45,6 +55,27 @@
 				<div class="row last">
 					<div class="col s12">
 						<h5>Filter</h5>
+						<form id="filterForm" action="/v1/api/mappings" method="get">
+							<div class="row last">
+								<div class="col s12 m6">
+									<div class="input-field">
+										<input id="name" type="text" class="validate" placeholder="Filter by name">
+										<label for="name">Name</label>
+									</div>
+								</div>
+								<div class="col s12 m6">
+									<div class="input-field">
+										<input id="endpoint" type="text" class="validate" placeholder="or by endpoint">
+										<label for="endpoint">Endpoint</label>
+									</div>
+								</div>
+							</div>
+							<div class="row last">
+								<div class="col s12 m12">
+									<button class="btn waves-effect waves-light" type="submit">Filter</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -52,7 +83,8 @@
 				<div class="row last">
 					<div class="col s12">
 						<h5>Results</h5>
-						  <table class="highlight responsive-table">
+						<div id="resultsLoader" class="progress"><div class="indeterminate"></div></div>
+						<table id="resultsTable" class="highlight responsive-table">
 							<thead>
 								<tr>
 									<th>Name</th>
@@ -77,32 +109,8 @@
 					            	<a href="#" class="actionIcon"><i class="material-icons">delete</i></a>
 					            </td>
 					          </tr>
-					          <tr>
-					             <td>Alvin</td>
-					            <td>Eclair</td>
-					            <td>$0.87</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>
-					            	<a href="#" class="actionIcon"><i class="material-icons">edit</i></a>
-					            	<a href="#" class="actionIcon"><i class="material-icons">delete</i></a>
-					            </td>
-					          </tr>
-					          <tr>
-					             <td>Alvin</td>
-					            <td>Eclair</td>
-					            <td>$0.87</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>
-					            	<a href="#" class="actionIcon"><i class="material-icons">edit</i></a>
-					            	<a href="#" class="actionIcon"><i class="material-icons">delete</i></a>
-					            </td>
-					          </tr>
 					        </tbody>
-					      </table>
+					    </table>
 
 						<ul class="pagination">
 							<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>

@@ -11,7 +11,7 @@
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="/js/mocker.js"></script>
+    <script type="text/javascript" src="/js/mockerCreate.js"></script>
 
 	<title>Mocker - Create mapping</title>
 </head>
@@ -23,7 +23,17 @@
 					<div class="col l12 s12">
 						<div class="nav-wrapper">
 							<a href="/" class="brand-logo">Mocker</a>
-							<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+							<ul class="right hide-on-med-and-down">
+								<li><a href="/">Home</a></li>
+								<li><a href="/create">Create</a></li>
+								<li><a href="/view">View</a></li>
+								<li><a href="/update">Update</a></li>
+								<li><a href="/delete">Delete</a></li>
+								<li><a href="/about">About</a></li>
+								<li><a href="/contact">Contact</a></li>
+							</ul>
+							<ul id="nav-mobile" class="sidenav">
 								<li><a href="/">Home</a></li>
 								<li><a href="/create">Create</a></li>
 								<li><a href="/view">View</a></li>
