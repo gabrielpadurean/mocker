@@ -84,45 +84,19 @@
 					<div class="col s12">
 						<h5>Results</h5>
 						<div id="resultsLoader" class="progress"><div class="indeterminate"></div></div>
-						<table id="resultsTable" class="highlight responsive-table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Endpoint</th>
-									<th>Method</th>
-									<th>Status</th>
-									<th>Body</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-					          <tr>
-					            <td>Alvin</td>
-					            <td>Eclair</td>
-					            <td>$0.87</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>Eclair</td>
-					            <td>
-					            	<a href="#" class="actionIcon"><i class="material-icons">edit</i></a>
-					            	<a href="#" class="actionIcon"><i class="material-icons">delete</i></a>
-					            </td>
-					          </tr>
-					        </tbody>
-					    </table>
-
-						<ul class="pagination">
-							<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-							<li class="active teal"><a href="#!">1</a></li>
-							<li class="waves-effect"><a href="#!">2</a></li>
-							<li class="waves-effect"><a href="#!">3</a></li>
-							<li class="waves-effect"><a href="#!">4</a></li>
-							<li class="waves-effect"><a href="#!">5</a></li>
-							<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-						</ul>
+						<div id="resultsContainer"></div>
 					</div>
 				</div>
+			</div>
+		</div>
+		
+		<div class="modal">
+			<div class="modal-content">
+				<h5 id="modalTitle"></h5>
+				<p id="modalContent"></p>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="modal-close waves-effect waves-green btn">Close</a>
 			</div>
 		</div>
 	</main>

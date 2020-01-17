@@ -12,6 +12,7 @@ import org.mocker.validation.mapping.MappingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,11 +45,11 @@ public class MappingController {
 	public ResponseEntity<List<Mapping>> getMappings(@RequestParam(required = false) String name, @RequestParam(required = false) String endpoint, Pageable pageable) {
 		List<Mapping> mappings = null;
 		
-		if (name == null && endpoint == null) {
+		if (StringUtils.isEmpty(name) && StringUtils.isEmpty(endpoint)) {
 			mappings = mappingService.findAll(pageable);
-		} else if (name != null && endpoint != null) {
+		} else if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(endpoint)) {
 			mappings = mappingService.findByNameAndEndpointContaining(name, endpoint, pageable);
-		} else if (name != null) {
+		} else if (!StringUtils.isEmpty(name)) {
 			mappings = mappingService.findByNameContaining(name, pageable);
 		} else {
 			mappings = mappingService.findByEndpointContaining(endpoint, pageable);
