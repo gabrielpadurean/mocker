@@ -50,6 +50,23 @@ function loadResults(pageValue, pageSize) {
 	});
 };
 
+function deleteResult(id) {
+	$.ajax({
+		url: '/v1/api/mappings/' + id,
+		type: 'delete'
+	})
+	.done(function(data) {
+		loadResults(0, 20);
+	})
+	.fail(function(data) {
+		$('#modalTitle').html("Error");
+		$('#modalContent').html("Mapping could not be deleted due to the following error: " + data.responseJSON.message);
+		$('.modal').modal('open');
+		
+		loadResults(0, 20);
+	});
+};
+
 function hideResultsLoader() {
 	$('#resultsLoader').hide();
 };
@@ -75,7 +92,7 @@ function showResultsTable(mappings, pageValue, pageSize) {
 			mappings[index].request.endpoint + '</td><td>' + 
 			mappings[index].request.method + '</td><td>' + 
 			mappings[index].response.status + '</td><td>' + 
-			mappings[index].response.body + '</td><td><a href="#" class="actionIcon"><i class="material-icons">edit</i></a><a href="#" class="actionIcon"><i class="material-icons">delete</i></a></td></tr>';
+			mappings[index].response.body + '</td><td><a href="javascript:;" title="Update mapping" class="actionIcon"><i class="material-icons">edit</i></a><a href="javascript:deleteResult(' + mappings[index].id + ');" title="Delete mapping" class="actionIcon"><i class="material-icons">delete</i></a></td></tr>';
 	}
 	
 	$('#resultsContainer').append(resultsTableStart + resultsTable + resultsTableEnd);
